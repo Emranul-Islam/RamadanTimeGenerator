@@ -1,0 +1,56 @@
+<resources>
+    <string name="app_name">রমাদ্বান টাইম</string>
+
+
+    <string-array name="ramadan_day">
+
+        <item>০১</item>
+        <item>০২</item>
+        <item>০৩</item>
+        <item>০৪</item>
+        <item>০৫</item>
+        <item>০৬</item>
+        <item>০৭</item>
+        <item>০৮</item>
+        <item>০৯</item>
+        <item>১০</item>
+        <item>১১</item>
+        <item>১২</item>
+        <item>১৩</item>
+        <item>১৪</item>
+        <item>১৫</item>
+        <item>১৬</item>
+        <item>১৭</item>
+        <item>১৮</item>
+        <item>১৯</item>
+        <item>২০</item>
+        <item>২১</item>
+        <item>২২</item>
+        <item>২৩</item>
+        <item>২৪</item>
+        <item>২৫</item>
+        <item>২৬</item>
+        <item>২৭</item>
+        <item>২৮</item>
+        <item>২৯</item>
+        <item>৩০</item>
+
+    </string-array>
+    <string-array name="day">
+
+        <item>শুক্রবার</item>
+        <item>শনিবার</item>
+        <item>রবিবার</item>
+        <item>সোমবার</item>
+        <item>মঙ্গলবার</item>
+        <item>বুধবার</item>
+        <item>বৃহস্পতিবার</item>
+
+    </string-array>
+
+    <string-array name="month">
+        <item>মে</item>
+        <item>জুন</item>
+    </string-array>
+
+</resources>

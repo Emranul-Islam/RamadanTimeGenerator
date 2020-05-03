@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    tools:context=".ImageActivity">
+
+    <RelativeLayout
+        android:id="@+id/layout"
+        android:layout_width="300dp"
+        android:layout_height="380dp"
+        android:layout_marginTop="5dp"
+        android:layout_centerHorizontal="true">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="1dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/tamplet" />
+
+        <TextView
+            android:fontFamily="@font/shorif_shishir_unicod"
+            android:id="@+id/ramadanDay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="125dp"
+            android:elevation="3dp"
+            android:textColor="@color/colorFontOne"
+            android:text="৩০"
+            android:textAlignment="center"
+            android:textSize="50sp" />
+
+        <TextView
+            android:fontFamily="@font/shorif_shishir_unicod"
+            android:id="@+id/day"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="203dp"
+            android:elevation="3dp"
+            android:textColor="@color/colorFontOne"
+            android:text="শুক্রবার, ১০ এপ্রিল ২০২০"
+            android:textAlignment="center"
+            android:textSize="17sp" />
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="253dp"
+            android:layout_marginBottom="346dp"
+            android:elevation="2dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:fontFamily="@font/shorif_shishir_unicod"
+                android:id="@+id/iftar_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:elevation="3dp"
+                android:text="০৮ : ১০"
+                android:textAlignment="center"
+                android:textColor="@color/colorFontTwo"
+                android:textSize="25sp" />
+
+            <TextView
+                android:fontFamily="@font/shorif_shishir_unicod"
+                android:id="@+id/sehri_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="12dp"
+                android:elevation="3dp"
+                android:text="০৮ : ১০"
+                android:paddingEnd="27dp"
+                android:textAlignment="center"
+                android:textColor="@color/colorFontTwo"
+                android:textSize="25sp" />
+
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="2dp"
+            android:layout_marginTop="305dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:orientation="horizontal"
+                android:weightSum="5">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:padding="5dp"
+                    app:civ_border_color="@color/colorFontOne"
+                    app:civ_border_width="1dp"
+                    app:civ_border_overlay="true"
+                    android:layout_weight="1"
+                    android:src="@drawable/icon" />
+
+                <LinearLayout
+                    android:layout_weight="4"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:elevation="3dp"
+                        android:textColor="@color/colorFontThree"
+                        android:maxLength="26"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/shobuj_nolua_unicod"
+                        android:text="বিটেশ্বর যুব সমাজবিটেশ্বর যুব সমাজবিটেশ্বর যুব সমাজ"
+                        android:textAlignment="center"
+                        android:textSize="28sp" />
+
+                    <TextView
+                        android:id="@+id/subTitle"
+                        android:textColor="@color/colorFontThree"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:elevation="3dp"
+                        android:maxLength="50"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:text="aanananandndndanandndndanandndndanandndndanandndndanandndndndndnddd"
+                        android:textAlignment="center"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/dist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:fontFamily="@font/shorif_shishir_unicod"
+                android:text="Cumilla"
+                android:elevation="3dp"
+                android:paddingEnd="5dp"
+                android:layout_alignParentBottom="true"
+                android:textColor="@color/colorFontOne"
+                android:layout_alignParentEnd="true"
+                android:paddingStart="5dp" />
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <Button
+        android:onClick="save"
+        android:id="@+id/save_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="সেভ করুন"
+        android:textSize="25sp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/btn_design"
+        android:padding="20dp"
+        android:elevation="5dp"
+        android:layout_margin="30dp" />
+
+
+</RelativeLayout>
