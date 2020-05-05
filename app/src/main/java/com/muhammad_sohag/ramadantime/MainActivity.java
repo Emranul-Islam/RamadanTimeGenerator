@@ -20,6 +20,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -33,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText iftatTimeET, sehriTimeET, titleET, subET, distET;
     private CircleImageView imageView;
     private Uri imageUri = null;
+    private InterstitialAd mInterstitialAd;
 
 
     @Override
@@ -43,6 +50,20 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //ads initialize
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+
+            }
+        });
+        //myInterstitialAdId: ca-app-pub-8851464520979715/1650297592
+        //testInterstitialAdId: ca-app-pub-3940256099942544/1033173712
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-8851464520979715/1650297592");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
 
         imageView = findViewById(R.id.select_image);
         ramadanDaySp = findViewById(R.id.spinner_ramadan_day);
@@ -99,9 +120,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     public void click(View view) {
+        //if ad loaded then show:
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+            mInterstitialAd.setAdListener(new AdListener() {
+                @Override
+                public void onAdClosed() {
+                    saveProcess();
+                    super.onAdClosed();
+                }
 
+                @Override
+                public void onAdClicked() {
+                    saveProcess();
+                    super.onAdClicked();
+                }
+            });
+        } else {
+            saveProcess();
+        }
+
+
+    }
+
+    private void saveProcess() {
         String ramadanDay = ramadanDaySp.getSelectedItem().toString();
         String day = daySp.getSelectedItem().toString();
         String date = dateSP.getSelectedItem().toString();
@@ -132,9 +175,9 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
 
         } else {
+
             Toast.makeText(this, "সব গুলা বক্স পূরন করুন !!", Toast.LENGTH_LONG).show();
         }
-
 
     }
 
@@ -172,8 +215,9 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Error: " + error, Toast.LENGTH_SHORT).show();
             }
         }
-    }
 
+
+    }
 
 
 }

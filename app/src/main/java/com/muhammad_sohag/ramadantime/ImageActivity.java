@@ -23,6 +23,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -37,6 +44,7 @@ public class ImageActivity extends AppCompatActivity {
     private OutputStream outputStream;
     private Button saveBtn;
     private CircleImageView imageView;
+    private InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +54,19 @@ public class ImageActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_image);
+
+        //ads initialize
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+
+            }
+        });
+        //myInterstitialAdId: ca-app-pub-8851464520979715/1650297592
+        //testInterstitialAdId: ca-app-pub-3940256099942544/1033173712
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-8851464520979715/1650297592");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
         layout = findViewById(R.id.layout);
         linearLayoutButtom = findViewById(R.id.linear_layout_bottom);
@@ -87,22 +108,16 @@ public class ImageActivity extends AppCompatActivity {
 
     }
 
+
     //save button listener
     public void save(View view) {
 
-        permission();
-
-
-    }
-
-    //getting user SD card permission
-    private void permission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
             if (ContextCompat.checkSelfPermission(ImageActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
                     && ContextCompat.checkSelfPermission(ImageActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(ImageActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-                ActivityCompat.requestPermissions(ImageActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
+                ActivityCompat.requestPermissions(ImageActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
 
                 saveProcess();
 
@@ -114,7 +129,9 @@ public class ImageActivity extends AppCompatActivity {
             saveProcess();
         }
 
+
     }
+
 
     //layout takee image e convert kore sd card e save kora hoiche
     private void saveProcess() {
@@ -136,14 +153,31 @@ public class ImageActivity extends AppCompatActivity {
             intent.setData(Uri.fromFile(file));
             sendBroadcast(intent);
 
-            saveBtn.setClickable(false);
+            //saveBtn.setClickable(false);
+            if (mInterstitialAd.isLoaded()) {
+                mInterstitialAd.show();
+                mInterstitialAd.setAdListener(new AdListener() {
+                    @Override
+                    public void onAdClosed() {
+                        super.onAdClosed();
+                        Toast.makeText(ImageActivity.this, "ইমেজ সেভ হয়েছে !!", Toast.LENGTH_LONG).show();
+                    }
 
-            Toast.makeText(this, "ইমেজ সেভ হয়েছে !!", Toast.LENGTH_LONG).show();
+                    @Override
+                    public void onAdClicked() {
+                        Toast.makeText(ImageActivity.this, "ইমেজ সেভ হয়েছে !!", Toast.LENGTH_LONG).show();
+                        super.onAdClicked();
+                    }
+                });
+            } else {
+                Toast.makeText(this, "ইমেজ সেভ হয়েছে !!", Toast.LENGTH_LONG).show();
+            }
 
 
         } catch (IOException e) {
             Log.e("TAG", "saveProcess: ", e);
             e.printStackTrace();
+            Toast.makeText(this, "সমস্যা হয়েছে !!: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 }
