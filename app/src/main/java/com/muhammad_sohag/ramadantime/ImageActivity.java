@@ -10,6 +10,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -141,6 +143,7 @@ public class ImageActivity extends AppCompatActivity {
 
         File sd = Environment.getExternalStorageDirectory();
         File dir = new File(sd.getAbsolutePath() + "/Ramadan Time/");
+        dir.mkdir();
         File file = new File(dir, "RamadanTime" + System.currentTimeMillis() + ".jpg");
 
         try {
@@ -160,17 +163,25 @@ public class ImageActivity extends AppCompatActivity {
                     @Override
                     public void onAdClosed() {
                         super.onAdClosed();
-                        Toast.makeText(ImageActivity.this, "ইমেজ সেভ হয়েছে !!", Toast.LENGTH_LONG).show();
+                        saveBtn.setClickable(false);
+                        customToast();
+                        Toast.makeText(ImageActivity.this, "ইমেজ সেভ হয়েছে !!", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onAdClicked() {
-                        Toast.makeText(ImageActivity.this, "ইমেজ সেভ হয়েছে !!", Toast.LENGTH_LONG).show();
+                        customToast();
+                        Toast.makeText(ImageActivity.this, "ইমেজ সেভ হয়েছে !!", Toast.LENGTH_SHORT).show();
+                        saveBtn.setClickable(false);
                         super.onAdClicked();
                     }
                 });
             } else {
-                Toast.makeText(this, "ইমেজ সেভ হয়েছে !!", Toast.LENGTH_LONG).show();
+                customToast();
+                Toast.makeText(this, "ইমেজ সেভ হয়েছে !!", Toast.LENGTH_SHORT).show();
+                saveBtn.setClickable(false);
+
+
             }
 
 
@@ -179,5 +190,16 @@ public class ImageActivity extends AppCompatActivity {
             e.printStackTrace();
             Toast.makeText(this, "সমস্যা হয়েছে !!: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
+    }
+
+
+    private void customToast() {
+        View view = LayoutInflater.from(this).inflate(R.layout.confirm_toast_massage, null, false);
+        Toast toast = new Toast(this);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.setView(view);
+        toast.show();
+
     }
 }
