@@ -34,6 +34,7 @@
         <item>২৮</item>
         <item>২৯</item>
         <item>৩০</item>
+        <item>৩১</item>
 
     </string-array>
     <string-array name="day">
@@ -49,8 +50,18 @@
     </string-array>
 
     <string-array name="month">
+        <item>জানুয়ারি</item>
+        <item>ফেব্রুয়ারি</item>
+        <item>মার্চ</item>
+        <item>এপ্রিল</item>
         <item>মে</item>
         <item>জুন</item>
+        <item>জুলাই</item>
+        <item>আগস্ট</item>
+        <item>সেপ্টেম্বর</item>
+        <item>অক্টোবর</item>
+        <item>নবেম্বর</item>
+        <item>ডিসেম্বর</item>
     </string-array>
 
 </resources>

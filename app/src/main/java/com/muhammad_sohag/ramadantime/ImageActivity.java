@@ -48,6 +48,7 @@ public class ImageActivity extends AppCompatActivity {
     private CircleImageView imageView;
     private InterstitialAd mInterstitialAd;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,9 +117,7 @@ public class ImageActivity extends AppCompatActivity {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
-            if (ContextCompat.checkSelfPermission(ImageActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
-                    && ContextCompat.checkSelfPermission(ImageActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(ImageActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+            if (ContextCompat.checkSelfPermission(ImageActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(ImageActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
 
                 saveProcess();
@@ -131,7 +130,6 @@ public class ImageActivity extends AppCompatActivity {
             saveProcess();
         }
 
-
     }
 
 
@@ -141,19 +139,45 @@ public class ImageActivity extends AppCompatActivity {
         Canvas canvas = new Canvas(bitmap);
         layout.draw(canvas);
 
-        File sd = Environment.getExternalStorageDirectory();
-        File dir = new File(sd.getAbsolutePath() + "/Ramadan Time/");
-        dir.mkdir();
-        File file = new File(dir, "RamadanTime" + System.currentTimeMillis() + ".jpg");
+
+        File file = new File(Environment.getExternalStorageDirectory(), "Ramadan Time");
+
+//       File sd = Environment.getExternalStorageDirectory();
+//        File dir = new File(sd.getAbsolutePath() + "/Ramadan Time/");
+//        boolean isDirectoryCrated = dir.exists();
+//        if (!isDirectoryCrated){
+//            isDirectoryCrated = dir.mkdir();
+//            Toast.makeText(this, "Directory Created", Toast.LENGTH_SHORT).show();
+//        }
+
+        boolean isDirectoryCrated = file.exists();
+
+        if (!isDirectoryCrated) {
+            file.mkdir();
+            savefile(bitmap, file);
+            Toast.makeText(this, "Make dir", Toast.LENGTH_SHORT).show();
+        } else {
+            savefile(bitmap, file);
+        }
+
+
+//        File file = new File(dir, "RamadanTime" + System.currentTimeMillis() + ".jpg");
+
+
+    }
+
+    private void savefile(Bitmap bitmap, File file) {
+
+        File readyFile = new File(file, "RamadanTime" + System.currentTimeMillis() + ".jpg");
 
         try {
-            outputStream = new FileOutputStream(file);
+            outputStream = new FileOutputStream(readyFile);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
             outputStream.flush();
             outputStream.close();
 
             Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-            intent.setData(Uri.fromFile(file));
+            intent.setData(Uri.fromFile(readyFile));
             sendBroadcast(intent);
 
             //saveBtn.setClickable(false);
@@ -202,4 +226,5 @@ public class ImageActivity extends AppCompatActivity {
         toast.show();
 
     }
+
 }
